@@ -14,10 +14,10 @@ Histopathological image semantic segmentation is crucial for cancer diagnosis an
 ---
 
 ## 📂 Datasets
-📥 Download datasets from:
-You can download the two datasets we used from the following two links. 
--[LUAD-HistoSeg](https://drive.google.com/drive/folders/1E3Yei3Or3xJXukHIybZAgochxfn6FJpr?usp=sharing)
--[BCSS-WSSS](https://drive.google.com/drive/folders/1iS2Z0DsbACqGp7m6VDJbAcgzeXNEFr77?usp=sharing)
+📥 Download datasets from:  
+You can download the two datasets we used from the following two links.  
+-[LUAD-HistoSeg](https://drive.google.com/drive/folders/1E3Yei3Or3xJXukHIybZAgochxfn6FJpr?usp=sharing)  
+-[BCSS-WSSS](https://drive.google.com/drive/folders/1iS2Z0DsbACqGp7m6VDJbAcgzeXNEFr77?usp=sharing)  
 
 ---
 
@@ -31,13 +31,13 @@ You can download the two datasets we used from the following two links.
 ---
 
 ## 📌 Prerequisite
+
+### Pretrained Weights
 Before training, download pretrained weights:
 - To train the classification and segmentation stages, you should download the pre-trained weights for ResNet-38 and DeepLabV3+:
 - 🔗 [baidu cloud](https://pan.baidu.com/s/1sQp4Na-883pSxgMWK4wcRQ) (code **nylc**)
-- 🔗 [onedrive](https://1drv.ms/u/s!AgOtqK2ZncKlgoRobleElpBC5rbf7A?e=bDfqks) 
+- 🔗 [onedrive](https://1drv.ms/u/s!AgOtqK2ZncKlgoRobleElpBC5rbf7A?e=bDfqks)   
 Place put them in the **init_weights** folder.
-
----
 
 ### 🗂️ Dataset Structure
 Ensure your dataset is organized as follows:
@@ -62,10 +62,10 @@ TP-CAM/
 
 ## 🚀 Usage Guide
 
-###  ✅One-click run (Recommended)
-- In this work, our method include two stage~(**Classification**, **Segmentation**).
-You can directly run run.sh to complete the two-part training and test.
-- 👉To run the whole method, you need to specify the dataset related hyperparameters. Please see the command in run.sh.
+###  ✅ One-click run (Recommended)
+- In this work, our method include two stage~(**Classification**, **Segmentation**).  
+You can directly run **run.sh** to complete the two-part training and test.
+- 👉To run the whole method, you need to specify the dataset related hyperparameters. Please see the command in **run.sh**.
 
 ```bash
 bash run.sh
@@ -73,16 +73,16 @@ bash run.sh
 
 ---
 
-### 🔧Step-by-step 
-- The whole method includes the step of classification model training and segmentation model training(including pseudo-labels generation). You can use following scripts to run each step.
-- Please specify the argument in the command. You can also check run.sh to see more details.
-#### 🧩1、Train the classification model: 
+### 🔧 Step-by-step 
+- The whole method includes the step of classification model training and segmentation model training (including pseudo-labels generation). You can use following scripts to run each step.
+- Please specify the argument in the command. You can also check **run.sh** to see more details.
+#### 🧩 1、Train the classification model: 
 
 ```bash
 python enhance_cam.py --dataset luad --trainroot datasets/LUAD-HistoSeg/train/ --testroot datasets/LUAD-HistoSeg/test/
 ```
 
-#### 🧩2、Train the segmentation model: 
+#### 🧩 2、Train the segmentation model: 
 
 ```bash
 python mask_seg.py --dataset luad --dataroot datasets/LUAD-HistoSeg
