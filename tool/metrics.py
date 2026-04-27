@@ -1,0 +1,137 @@
+import numpy as np
+
+'''
+mask_seg.py
+'''
+class Evaluator(object):
+    def __init__(self, num_class):
+        self.num_class = num_class
+        self.confusion_matrix = np.zeros((self.num_class,)*2)
+
+    def Pixel_Accuracy(self):
+        Acc = np.diag(self.confusion_matrix).sum() / self.confusion_matrix.sum()
+        return Acc
+
+    def Pixel_Accuracy_Class(self):
+        Acc = np.diag(self.confusion_matrix) / self.confusion_matrix.sum(axis=1)
+        Acc = np.nanmean(Acc)
+        return Acc
+
+    def Mean_Intersection_over_Union(self):
+        ious = np.diag(self.confusion_matrix) / (
+                    np.sum(self.confusion_matrix, axis=1) + np.sum(self.confusion_matrix, axis=0) -
+                    np.diag(self.confusion_matrix))
+        MIoU = np.nanmean(ious)
+        return MIoU
+
+    def Intersection_over_Union(self):
+        ious = np.diag(self.confusion_matrix) / (
+                    np.sum(self.confusion_matrix, axis=1) + np.sum(self.confusion_matrix, axis=0) -
+                    np.diag(self.confusion_matrix))
+        return ious
+
+    def Frequency_Weighted_Intersection_over_Union(self):
+        freq = np.sum(self.confusion_matrix, axis=1) / np.sum(self.confusion_matrix)
+        iu = np.diag(self.confusion_matrix) / (
+                    np.sum(self.confusion_matrix, axis=1) + np.sum(self.confusion_matrix, axis=0) -
+                    np.diag(self.confusion_matrix))
+
+        FWIoU = (freq[freq > 0] * iu[freq > 0]).sum()
+        return FWIoU
+
+    def _generate_matrix(self, gt_image, pre_image):
+        mask = (gt_image >= 0) & (gt_image<self.num_class)
+        label = (self.num_class) * gt_image[mask].astype('int') + pre_image[mask]
+        count = np.bincount(label, minlength=(self.num_class)**2)
+        confusion_matrix = count.reshape(self.num_class, self.num_class)
+        return confusion_matrix
+
+    def add_batch(self, gt_image, pre_image):
+        assert gt_image.shape == pre_image.shape
+        self.confusion_matrix += self._generate_matrix(gt_image, pre_image)
+
+    def reset(self):
+        self.confusion_matrix = np.zeros((self.num_class,) * 2)
+
+    # 旧梦
+    def Precision(self):
+        # 计算每个类别的precision
+        precision = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=0)
+        # 返回平均precision
+        return np.nanmean(precision)
+    def Recall(self):
+        # 计算每个类别的recall
+        recall = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=1)
+        # 返回平均recall
+        return np.nanmean(recall)
+    def F1_Score(self):
+        # 计算每个类别的precision和recall
+        precision = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=0)
+        recall = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=1)
+        # 计算每个类别的F1-Score
+        f1 = 2 * (precision * recall) / (precision + recall)
+        # 返回平均F1-Score
+        return np.nanmean(f1)
+    def Class_Precision(self):
+        # 返回每个类别的precision
+        return np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=0)
+    def Class_Recall(self):
+        # 返回每个类别的recall
+        return np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=1)
+    def Class_F1_Score(self):
+        # 返回每个类别的F1-Score
+        precision = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=0)
+        recall = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=1)
+        return 2 * (precision * recall) / (precision + recall)
+    # 旧梦
+
+
+class Evaluator_BCSS(object):
+    def __init__(self, num_class):
+        self.num_class = num_class
+        self.confusion_matrix = np.zeros((self.num_class,)*2)
+
+    def Pixel_Accuracy(self):
+        Acc = np.diag(self.confusion_matrix).sum() / self.confusion_matrix.sum()
+        return Acc
+
+    def Pixel_Accuracy_Class(self):
+        Acc = np.diag(self.confusion_matrix) / self.confusion_matrix.sum(axis=1)
+        Acc = np.nanmean(Acc)
+        return Acc
+
+    def Mean_Intersection_over_Union(self):
+        ious = np.diag(self.confusion_matrix) / (
+                    np.sum(self.confusion_matrix, axis=1) + np.sum(self.confusion_matrix, axis=0) -
+                    np.diag(self.confusion_matrix))
+        MIoU = np.nanmean(ious)
+        return MIoU
+
+    def Intersection_over_Union(self):
+        ious = np.diag(self.confusion_matrix) / (
+                    np.sum(self.confusion_matrix, axis=1) + np.sum(self.confusion_matrix, axis=0) -
+                    np.diag(self.confusion_matrix))
+        return ious
+
+    def Frequency_Weighted_Intersection_over_Union(self):
+        freq = np.sum(self.confusion_matrix, axis=1) / np.sum(self.confusion_matrix)
+        iu = np.diag(self.confusion_matrix) / (
+                    np.sum(self.confusion_matrix, axis=1) + np.sum(self.confusion_matrix, axis=0) -
+                    np.diag(self.confusion_matrix))
+
+        FWIoU = (freq[freq > 0] * iu[freq > 0]).sum()
+        return FWIoU
+
+    def _generate_matrix(self, gt_image, pre_image):
+        mask = (gt_image >= 0) & (gt_image<self.num_class)
+        label = (self.num_class) * gt_image[mask].astype('int') + pre_image[mask]
+        count = np.bincount(label, minlength=(self.num_class)**2)
+        confusion_matrix = count.reshape(self.num_class, self.num_class)
+        return confusion_matrix
+
+    def add_batch(self, gt_image, pre_image):
+        assert gt_image.shape == pre_image.shape
+        self.confusion_matrix += self._generate_matrix(gt_image, pre_image)
+
+    def reset(self):
+        self.confusion_matrix = np.zeros((self.num_class,) * 2)
