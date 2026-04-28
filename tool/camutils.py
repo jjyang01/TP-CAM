@@ -2,9 +2,6 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 
-'''
-none
-'''
 def draw_heatmap(img, hm):
     hm = (hm - np.min(hm)) / (np.max(hm) - np.min(hm))
     hm = plt.cm.hot(hm)[:, :, :3]

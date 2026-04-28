@@ -10,9 +10,6 @@ from tool import infer_utils
 from PIL import Image
 import torch.nn.functional as F
 
-'''
-tool/infer_fun.py
-'''
 class FeatureExtractor():
     """ Class for extracting activations and
     registering gradients from targetted intermediate layers """
@@ -44,7 +41,6 @@ class ModelOutputs():
     def __init__(self, model, feature_module, target_layers):
         self.model = model
         self.feature_module = feature_module
-        # self.feature_extractor = FeatureExtractor(self.feature_module, target_layers)
         self.gradients = []
 
     def save_gradient(self, grad):
@@ -56,10 +52,8 @@ class ModelOutputs():
     def __call__(self, x):
         target_activations = []
         for name, module in self.model._modules.items():
-            # print(name)
             
             if module == self.feature_module:
-                # target_activations, x = self.feature_extractor(x)
                 x = module(x)
                 if name == "bn7":
                     x = F.relu(x)
@@ -87,7 +81,6 @@ def preprocess_image(img):
 def show_cam_on_image(img, mask):
     heatmap = cv2.applyColorMap(np.uint8(255 * mask), cv2.COLORMAP_BONE)
     heatmap = np.float32(heatmap) / 255
-    # cam = heatmap + np.float32(img)
     cam = heatmap
     cam = cam / np.max(cam)
     return np.uint8(255 * cam)
@@ -213,27 +206,3 @@ if __name__ == '__main__':
                 cam_show = Image.fromarray(cv2.cvtColor(cam_show,cv2.COLOR_BGR2RGB))
                 cam_show.save("choose/exp"+str(k)+"/Baseline_cam"+str(i)+'_epoch_'+str(name_i)+".jpg")
                 test = 1
-            # cv2.imwrite("the_state_of_CAMs_in_training_process/cam_"+str(i)+'_epoch_'+str(name_i)+".jpg", cam)
-    # cam = np.array(cam)
-    # print(cam.shape)
-
-    # image_path = args.image_path
-    # orig_img = np.asarray(Image.open(image_path))
-    # L = image_path.split('/')[-1].split('.')[0]
-    # label = torch.Tensor([int(L[1]),int(L[3]),int(L[5]),int(L[7])])
-    # cam_dict = infer_utils.cam_npy_to_cam_dict(cam, label)
-    # cam_score, bg_score = infer_utils.dict2npy(cam_dict, label, orig_img, None) 
-    # bgcam_score = np.concatenate((cam_score, bg_score), axis=0)
-    # seg_map = infer_utils.cam_npy_to_label_map(bgcam_score) 
-
-    # palette = [0]*768
-    # palette[0:3] = [192, 128, 128]
-    # palette[3:6] = [128, 64, 0]
-    # palette[6:9] = [0, 64, 128]
-    # palette[9:12] = [64, 128, 0]
-    # palette[12:15] = [224, 224, 192]
-
-    # visualimg  = Image.fromarray(seg_map.astype(np.uint8), "P")
-    # visualimg.putpalette(palette) 
-    # visualimg.save(image_path.split('.')[0]+'mask.png', format='PNG')
-

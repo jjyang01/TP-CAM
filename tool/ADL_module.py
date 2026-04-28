@@ -2,14 +2,8 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 
-'''
-network/resnet38_cls
-'''
-
 class Attention_Module(nn.Module):
     '''
-    network/resnet38_cls.py
-    
     input: torch.tensor: c*4096*28*28
     ouput:4*1 feature vector
     '''

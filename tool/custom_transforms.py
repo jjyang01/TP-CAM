@@ -4,12 +4,6 @@ import numpy as np
 
 from PIL import Image, ImageOps, ImageFilter
 
-'''
-network/sync_batchnorm/replicate.py
-tool/GenDataset.py
-'''
-
-# 对图像进行标准化处理
 class Normalize(object):
     """Normalize a tensor image with mean and standard deviation.
     Args:

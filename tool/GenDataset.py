@@ -9,12 +9,6 @@ from torch.utils.data import DataLoader
 from tool import custom_transforms as tr
 from retrieval.gen_prompt import GenPrompt
 
-'''
-1_train_stage1.py
-3_tarin_stage2.py
-tool/custom_transforms.py
-tool/infer_fun.py
-'''
 class Stage1_InferDataset(Dataset):
     def __init__(self, data_path, transform=None, target_transform=None):
         self.data_path = data_path
@@ -71,25 +65,9 @@ class Stage1_TrainDataset(Dataset):
 
                     # get label 2
                     image_label = self.gen_prompt.get_label(image_path)
-                    # print(image_label)  # 使用 GenPrompt 获取标签
+                    # print(image_label)
                     if image_label is not None:
                         path_label.append((image_path, image_label))
-
-
-                    # # get label
-                    # fname = f[:-4]
-                    # json_path = os.path.join(root, fname + '.json')
-                    # try:
-                    #     with open(json_path, 'r') as json_file:
-                    #         data = json.load(json_file)
-                    #         code = data['code'][0]
-                    #         image_label = torch.Tensor([code['a'], code['b'], code['c'], code['d']])
-                    #         path_label.append((image_path, image_label))
-
-                    # except FileNotFoundError:
-                    #     print(f"JSON file not found for {image_path}")
-                    # except json.JSONDecoderError:
-                    #     print(f"Error decoding JSON file for {image_path}")
         return path_label
 
 class Stage2_Dataset(Dataset):
@@ -119,7 +97,6 @@ class Stage2_Dataset(Dataset):
             self.categories_a = [os.path.join(self._cat_dir_a, fn + '.png') for fn in self.filenames]
             self.categories_b = [os.path.join(self._cat_dir_b, fn + '.png') for fn in self.filenames]
         assert (len(self.images) == len(self.categories))
-        # print('Number of images in {}: {:d}'.format(split, len(self.images)))
 
     def __len__(self):
         return len(self.images)
