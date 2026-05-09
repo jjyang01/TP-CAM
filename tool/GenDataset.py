@@ -78,7 +78,6 @@ class Stage2_Dataset(Dataset):
         self.split = split
 
         if self.split   == "train":
-            # 更改了文件路径
             self._image_dir     = os.path.join(self._base_dir, 'train/img')
             self._cat_dir       = os.path.join(self._base_dir, 'masks/bn7/')# jiumeng
             self._cat_dir_a     = os.path.join(self._base_dir, 'masks/b5_2')

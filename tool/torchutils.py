@@ -6,10 +6,7 @@ import os.path
 import random
 import numpy as np
 from tool import imutils
-'''
-stage1
-tool/imutils.py
-'''
+
 class PolyOptimizer(torch.optim.SGD):
 
     def __init__(self, params, lr, weight_decay, max_step, momentum=0.9):

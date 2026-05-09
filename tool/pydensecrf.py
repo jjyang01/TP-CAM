@@ -5,9 +5,7 @@ from pydensecrf.utils import unary_from_softmax
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-'''
-tool/imutils.py
-'''
+
 class DenseCRF:
     """Class for implementing a dense CRF"""
 

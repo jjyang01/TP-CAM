@@ -5,10 +5,6 @@ import numpy as np
 import torch
 from torchvision import transforms
 
-'''
-tool/torchutils.py
-'''
-
 class RandomResizeLong():
 
     def __init__(self, min_long, max_long):

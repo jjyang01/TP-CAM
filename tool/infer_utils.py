@@ -10,11 +10,6 @@ import cv2
 from skimage import morphology
 import torch
 
-'''
-network/resnet38_cls.py
-tool/gradcam.py
-tool/infer_fun.py
-'''
 def create_class_key_in_dict(dict, cls_nb):
     for i in range(cls_nb):
         dict[i] = []

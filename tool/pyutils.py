@@ -1,11 +1,7 @@
-
 import numpy as np
 import time
 import sys
-'''
-1_train_stage1.py
-tool/infer_fun.py
-'''
+
 class Logger(object):
     def __init__(self, outfile):
         self.terminal = sys.stdout

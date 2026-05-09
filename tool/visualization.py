@@ -3,14 +3,8 @@ import torch
 import torch.nn.functional as F
 import cv2
 
-'''
-none
-'''
-
 def max_norm(p, version='torch', e=1e-5):
-	'''
-	cam的标化
-	'''
+
 	if version is 'torch':
 		if p.dim() == 3:
 			C, H, W = p.size()

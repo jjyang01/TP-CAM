@@ -1,8 +1,5 @@
 import numpy as np
 
-'''
-mask_seg.py
-'''
 class Evaluator(object):
     def __init__(self, num_class):
         self.num_class = num_class
@@ -53,37 +50,25 @@ class Evaluator(object):
     def reset(self):
         self.confusion_matrix = np.zeros((self.num_class,) * 2)
 
-    # 旧梦
     def Precision(self):
-        # 计算每个类别的precision
         precision = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=0)
-        # 返回平均precision
         return np.nanmean(precision)
     def Recall(self):
-        # 计算每个类别的recall
         recall = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=1)
-        # 返回平均recall
         return np.nanmean(recall)
     def F1_Score(self):
-        # 计算每个类别的precision和recall
         precision = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=0)
         recall = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=1)
-        # 计算每个类别的F1-Score
         f1 = 2 * (precision * recall) / (precision + recall)
-        # 返回平均F1-Score
         return np.nanmean(f1)
     def Class_Precision(self):
-        # 返回每个类别的precision
         return np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=0)
     def Class_Recall(self):
-        # 返回每个类别的recall
         return np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=1)
     def Class_F1_Score(self):
-        # 返回每个类别的F1-Score
         precision = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=0)
         recall = np.diag(self.confusion_matrix) / np.sum(self.confusion_matrix, axis=1)
         return 2 * (precision * recall) / (precision + recall)
-    # 旧梦
 
 
 class Evaluator_BCSS(object):

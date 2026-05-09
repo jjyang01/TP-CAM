@@ -3,9 +3,6 @@ import torch
 from collections import OrderedDict
 import glob
 
-'''
-stage2
-'''
 class Saver(object):
 
     def __init__(self, args):

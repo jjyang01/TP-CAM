@@ -8,9 +8,6 @@
 ## LICENSE file in the root directory of this source tree
 ##+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-'''
-mask_seg.py
-'''
 import math
 
 class LR_Scheduler(object):

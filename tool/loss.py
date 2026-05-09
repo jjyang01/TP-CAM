@@ -1,9 +1,6 @@
 import torch
 import torch.nn as nn
 
-'''
-3_train_stage2.py
-'''
 class SegmentationLosses(object):
     def __init__(self, weight=None, size_average=True, batch_average=True, ignore_index=255, cuda=False):
         self.ignore_index = ignore_index
